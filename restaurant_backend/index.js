@@ -4,6 +4,14 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 app.use(express.json());
+const corsConfig = {
+  origin: ["https://restaurant-seven-weld.vercel.app"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  credentials: true
+}
+
+app.options("", cors(corsConfig));
+app.use(cors(corsConfig));
 
 const menu = {
   "Non Veg Starters": [
