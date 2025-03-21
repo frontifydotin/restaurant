@@ -1,4 +1,12 @@
-// components/CardContent.tsx
-export function CardContent({ children }) {
-    return <div className="p-2">{children}</div>;
-  }
+import React from "react";
+
+interface CardContentProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const CardContent: React.FC<CardContentProps> = ({ children, className = "" }) => {
+  return <div className={`p-4 ${className}`}>{children}</div>;
+};
+
+export default CardContent;

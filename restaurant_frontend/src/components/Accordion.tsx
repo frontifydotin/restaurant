@@ -1,19 +1,24 @@
-// components/Accordion.tsx
-"use client"
 import { useState } from "react";
 
-export default function Accordion({ title, children }) {
-  const [open, setOpen] = useState(false);
+interface AccordionProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="mb-4 border rounded">
-      <div
-        className="p-4 bg-gray-200 cursor-pointer"
-        onClick={() => setOpen(!open)}
+    <div className="border-b">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full text-left p-4 bg-gray-100 font-bold"
       >
-        {title}
-      </div>
-      {open && <div className="p-4">{children}</div>}
+        {title} {isOpen ? "▲" : "▼"}
+      </button>
+      {isOpen && <div className="p-4">{children}</div>}
     </div>
   );
-}
+};
+
+export default Accordion;

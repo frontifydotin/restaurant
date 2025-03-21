@@ -5,22 +5,38 @@ import { useRestaurant } from "@/contexts/CommonContext";
 import React from "react";
 import Button from "./Button";
 
-const Modal = ({ show, onClose, orderDetails }) => {
+interface OrderItem {
+  name: string;
+  size: string;
+  price: number;
+  quantity: number;
+}
+interface ModalProps {
+  show: boolean;
+  onClose: () => void;
+  orderDetails: {
+    items: OrderItem[];
+    subtotal: number;
+    total: number;
+    isPacked: boolean;
+    gst: number;
+    SERVICE_CHARGE: number;
+    DELIVERY_CHARGE: number;
+    PACKING_CHARGE: number;
+  };
+}
+
+const Modal: React.FC<ModalProps> = ({ show, onClose }) => {
    const { menu, cart, addToCart, totalAmount, isPacked, setIsPacked, 
-      placeOrder, orderSuccess, setOrderSuccess, loading,
-      subtotal,
-          gst,
-          SERVICE_CHARGE,
-          DELIVERY_CHARGE,
-          PACKING_CHARGE,
-          orderData
+      placeOrder, orderSuccess, setOrderSuccess, loading, orderData
+      
      } = useRestaurant();
 
-  useEffect(() => {
-    if (show) {
-      console.log("Order Details in Modal:", orderDetails);
-    }
-  }, [show], orderDetails);
+  // useEffect(() => {
+  //   if (show) {
+  //     console.log("Order Details in Modal:", orderDetails);
+  //   }
+  // }, [show], orderDetails.items);
 
   if (!show) return null;
 
@@ -49,7 +65,7 @@ const Modal = ({ show, onClose, orderDetails }) => {
           <p><strong>GST (5%):</strong> ₹{orderData.gst.toFixed(2)}</p>
           <p><strong>Service Charge:</strong> ₹{orderData.SERVICE_CHARGE}</p>
           <p><strong>Delivery Charge:</strong> ₹{orderData.DELIVERY_CHARGE}</p>
-          {orderData.isPacked && <p><strong>Packing Charge:</strong> ₹{orderData.PACKING_CHARGE}</p>}
+          {isPacked && <p><strong>Packing Charge:</strong> ₹{orderData.PACKING_CHARGE}</p>}
           <h3 className="text-lg font-bold mt-2">Total: ₹{orderData.total.toFixed(2)}</h3>
         </div>
 
